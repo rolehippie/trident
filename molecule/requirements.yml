@@ -1,0 +1,8 @@
+# Standards: 1.2
+---
+collections:
+  - name: community.kubernetes
+    version: 1.1.1
+roles: []
+
+...

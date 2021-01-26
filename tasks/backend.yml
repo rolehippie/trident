@@ -1,0 +1,73 @@
+# Standards: 1.2
+---
+- name: Check backend exists
+  register: trident_backend_check
+  failed_when: False
+  changed_when: False
+  check_mode: False
+  command: "tridentctl --namespace {{ trident_namespace }} get backend {{ item.name }}"
+  environment:
+    KUBECONFIG: "{{ trident_kubeconfig }}"
+  tags:
+    - trident
+
+- name: Fact backend exists
+  set_fact:
+    trident_backend_exists: "{{ trident_backend_check.rc == 0 and item.name in trident_backend_check.stdout }}"
+  tags:
+    - trident
+
+- name: Temporary config file
+  register: trident_backend_file
+  changed_when: False
+  check_mode: False
+  when:
+    - item.state | default('present') != 'absent'
+  tempfile:
+    state: file
+    suffix: backend
+  tags:
+    - trident
+
+- name: Write backend config
+  changed_when: False
+  check_mode: False
+  when:
+    - item.state | default('present') != 'absent'
+  copy:
+    content: "{{ item.config | default({}) | combine({ 'backendName': item.name }) | to_json }}"
+    dest: "{{ trident_backend_file.path }}"
+  tags:
+    - trident
+
+- name: Create defined backend
+  when:
+    - not trident_backend_exists
+    - item.state | default('present') == 'present'
+  command: "tridentctl --namespace {{ trident_namespace }} create backend {{ item.name }} --filename {{ trident_backend_file.path }}"
+  environment:
+    KUBECONFIG: "{{ trident_kubeconfig }}"
+  tags:
+    - trident
+
+- name: Update defined backend
+  when:
+    - trident_backend_exists
+    - item.state | default('present') == 'latest'
+  command: "tridentctl --namespace {{ trident_namespace }} update backend {{ item.name }} --filename {{ trident_backend_file.path }}"
+  environment:
+    KUBECONFIG: "{{ trident_kubeconfig }}"
+  tags:
+    - trident
+
+- name: Delete defined backend
+  when:
+    - trident_backend_exists
+    - item.state | default('present') == 'absent'
+  command: "tridentctl --namespace {{ trident_namespace }} delete backend {{ item.name }}"
+  environment:
+    KUBECONFIG: "{{ trident_kubeconfig }}"
+  tags:
+    - trident
+
+...

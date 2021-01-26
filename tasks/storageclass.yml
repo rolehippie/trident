@@ -1,0 +1,64 @@
+# Standards: 1.2
+---
+- name: Check storageclass exists
+  register: trident_storageclass_check
+  failed_when: False
+  changed_when: False
+  check_mode: False
+  command: "tridentctl --namespace {{ trident_namespace }} get storageclass {{ item.name }}"
+  environment:
+    KUBECONFIG: "{{ trident_kubeconfig }}"
+  tags:
+    - trident
+
+- name: Fact storageclass exists
+  set_fact:
+    trident_storageclass_exists: "{{ trident_storageclass_check.rc == 0 and item.name in trident_storageclass_check.stdout }}"
+  tags:
+    - trident
+
+- name: Temporary config file
+  register: trident_storageclass_file
+  changed_when: False
+  check_mode: False
+  when:
+    - item.state | default('present') != 'absent'
+  tempfile:
+    state: file
+    suffix: storageclass
+  tags:
+    - trident
+
+- name: Write storageclass config
+  changed_when: False
+  check_mode: False
+  when:
+    - item.state | default('present') != 'absent'
+  template:
+    src: storageclass.j2
+    dest: "{{ trident_storageclass_file.path }}"
+  tags:
+    - trident
+
+- name: Apply defined storageclass
+  register: trident_storageclass_apply
+  changed_when: trident_storageclass_apply is defined and 'unchanged' not in trident_storageclass_apply.stdout
+  when:
+    - item.state | default('present') == 'present'
+  command: "kubectl --namespace {{ trident_namespace }} apply -f {{ trident_storageclass_file.path }}"
+  environment:
+    KUBECONFIG: "{{ trident_kubeconfig }}"
+  tags:
+    - trident
+
+- name: Delete defined storageclass
+  when:
+    - trident_storageclass_exists
+    - item.state | default('present') == 'absent'
+  command: "kubectl --namespace {{ trident_namespace }} delete storageclass {{ item.name }}"
+  environment:
+    KUBECONFIG: "{{ trident_kubeconfig }}"
+  tags:
+    - trident
+
+...

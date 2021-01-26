@@ -1,0 +1,101 @@
+# Standards: 1.2
+---
+- name: Check existing install
+  register: trident_version_check
+  failed_when: False
+  changed_when: False
+  check_mode: False
+  command: tridentctl version --client
+  tags:
+    - trident
+
+- name: Fact version change
+  set_fact:
+    trident_version_changed: "{{ trident_version_check.rc != 0 or (trident_version_check.stdout is defined and trident_version not in trident_version_check.stdout) | bool }}"
+  tags:
+    - trident
+
+- name: Download release tarball
+  when: trident_version_changed
+  unarchive:
+    src: "{{ trident_download }}"
+    dest: /usr/local/src
+    remote_src: True
+    owner: root
+    group: root
+  tags:
+    - trident
+
+- name: Copy downloaded binary
+  when: trident_version_changed and not ansible_check_mode
+  copy:
+    src: /usr/local/src/trident-installer/tridentctl
+    dest: tridentctl
+    remote_src: True
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  tags:
+    - trident
+
+- name: Remove install directory
+  file:
+    path: "/usr/local/src/trident-installer"
+    state: absent
+  tags:
+    - trident
+
+- name: Check server status
+  register: trident_server_check
+  failed_when: False
+  changed_when: False
+  command: "tridentctl --namespace {{ trident_namespace }} version"
+  environment:
+    KUBECONFIG: "{{ trident_kubeconfig }}"
+  tags:
+    - trident
+
+- name: Fact server status
+  set_fact:
+    trident_server_missing: "{{ trident_server_check.rc is defined and trident_server_check.rc != 0 and 'not find a Trident' in trident_server_check.stderr }}"
+  tags:
+    - trident
+
+- name: Install initial server
+  when: trident_server_missing
+  command: "tridentctl install --namespace {{ trident_namespace }}"
+  environment:
+    KUBECONFIG: "{{ trident_kubeconfig }}"
+  tags:
+    - trident
+
+- name: Poll server status
+  register: trident_server_poll
+  until: trident_server_poll.rc is defined and trident_server_poll.rc == 0 and 'SERVER VERSION' in trident_server_check.stdout
+  retries: 10
+  delay: 5
+  changed_when: False
+  when: not ansible_check_mode
+  command: "tridentctl --namespace {{ trident_namespace }} version"
+  environment:
+    KUBECONFIG: "{{ trident_kubeconfig }}"
+  tags:
+    - trident
+
+- name: Include backend tasks
+  loop: "{{ trident_backends }}"
+  loop_control:
+    label: "{{ item.name }}"
+  include: backend.yml
+  tags:
+    - trident
+
+- name: Include storageclass tasks
+  loop: "{{ trident_classes }}"
+  loop_control:
+    label: "{{ item.name }}"
+  include: storageclass.yml
+  tags:
+    - trident
+
+...

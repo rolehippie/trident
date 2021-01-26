@@ -1,0 +1,40 @@
+# Standards: 1.2
+---
+# @var trident_version:description: Version of the Trident release to install
+trident_version: 20.10.1
+
+# @var trident_download:description: URL to the archive of the release to install
+trident_download: "https://github.com/NetApp/trident/releases/download/v{{ trident_version }}/trident-installer-{{ trident_version }}.tar.gz"
+
+# @var trident_namespace:description: Namespace used within Kubernetes
+trident_namespace: trident-system
+
+# @var trident_kubeconfig:description: Path to a valid kubeconfig file
+trident_kubeconfig: /etc/kubernetes/admin.conf
+
+# @var trident_backends:description: List of available backends
+# @var trident_backends:example: >
+# trident_backends:
+#   - name: ssd
+#     config:
+#       version: 1
+#       storageDriverName: ontap-nas
+#       managementLIF: 10.20.0.2
+#       dataLIF: 10.30.0.2
+#       svm: svm_nfs
+#       username: username
+#       password: p455w0rd
+# @end
+trident_backends: []
+
+# @var trident_classes:description: List of Kubernetes storage classes
+# @var trident_classes:example: >
+# trident_classes:
+#   - name: ssd
+#     default: True
+#     backend: ontap-nas
+#     filesystem: ext4
+# @end
+trident_classes: []
+
+...
