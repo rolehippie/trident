@@ -1,6 +1,7 @@
 # Standards: 1.2
 ---
 # @var trident_version:description: Version of the Trident release to install
+# renovate: datasource=github-releases depName=NetApp/trident
 trident_version: 20.10.1
 
 # @var trident_download:description: URL to the archive of the release to install
