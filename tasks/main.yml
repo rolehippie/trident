@@ -11,7 +11,7 @@
 
 - name: Fact version change
   set_fact:
-    trident_version_changed: "{{ trident_version_check.rc != 0 or (trident_version_check.stdout is defined and trident_version not in trident_version_check.stdout) | bool }}"
+    trident_version_changed: "{{ trident_version_check.rc != 0 or (trident_version_check.stdout is defined and trident_version.lstrip('v') not in trident_version_check.stdout) | bool }}"
   tags:
     - trident
 
