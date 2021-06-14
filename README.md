@@ -79,8 +79,8 @@ URL to the archive of the release to install
 #### Default value
 
 ```YAML
-trident_download: https://github.com/NetApp/trident/releases/download/{{ trident_version
-  }}/trident-installer-{{ trident_version.lstrip('v') }}.tar.gz
+trident_download: https://github.com/NetApp/trident/releases/download/v{{ trident_version
+  }}/trident-installer-{{ trident_version }}.tar.gz
 ```
 
 ### trident_kubeconfig
@@ -110,7 +110,7 @@ Version of the Trident release to install
 #### Default value
 
 ```YAML
-trident_version: v21.04.0
+trident_version: 21.04.0
 ```
 
 ## Dependencies
