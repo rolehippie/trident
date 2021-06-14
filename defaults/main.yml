@@ -2,7 +2,7 @@
 ---
 # @var trident_version:description: Version of the Trident release to install
 # renovate: datasource=github-releases depName=NetApp/trident versioning=loose
-trident_version: v20.10.1
+trident_version: v21.04.0
 
 # @var trident_download:description: URL to the archive of the release to install
 trident_download: "https://github.com/NetApp/trident/releases/download/{{ trident_version }}/trident-installer-{{ trident_version.lstrip('v') }}.tar.gz"
