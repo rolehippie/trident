@@ -110,7 +110,7 @@ Version of the Trident release to install
 #### Default value
 
 ```YAML
-trident_version: 21.04.0
+trident_version: 21.07.2
 ```
 
 ## Dependencies
