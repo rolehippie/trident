@@ -5,7 +5,7 @@
   failed_when: False
   changed_when: False
   check_mode: False
-  command: tridentctl version --client
+  shell: tridentctl version --client 2>&1
   tags:
     - trident
 
