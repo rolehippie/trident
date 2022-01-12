@@ -86,7 +86,7 @@
   loop: "{{ trident_backends }}"
   loop_control:
     label: "{{ item.name }}"
-  include: backend.yml
+  include_tasks: backend.yml
   tags:
     - trident
 
@@ -94,7 +94,7 @@
   loop: "{{ trident_classes }}"
   loop_control:
     label: "{{ item.name }}"
-  include: storageclass.yml
+  include_tasks: storageclass.yml
   tags:
     - trident
 
