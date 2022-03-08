@@ -37,6 +37,9 @@
   copy:
     content: "{{ item.config | default({}) | combine({ 'backendName': item.name }) | to_json }}"
     dest: "{{ trident_backend_file.path }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   tags:
     - trident
 

@@ -37,6 +37,9 @@
   template:
     src: storageclass.j2
     dest: "{{ trident_storageclass_file.path }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
   tags:
     - trident
 
