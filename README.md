@@ -1,27 +1,28 @@
 # trident
 
-[![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/trident) [![Testing Build](https://github.com/rolehippie/trident/workflows/testing/badge.svg)](https://github.com/rolehippie/trident/actions?query=workflow%3Atesting) [![Readme Build](https://github.com/rolehippie/trident/workflows/readme/badge.svg)](https://github.com/rolehippie/trident/actions?query=workflow%3Areadme) [![Galaxy Build](https://github.com/rolehippie/trident/workflows/galaxy/badge.svg)](https://github.com/rolehippie/trident/actions?query=workflow%3Agalaxy) [![License: Apache-2.0](https://img.shields.io/github/license/rolehippie/trident)](https://github.com/rolehippie/trident/blob/master/LICENSE) 
+[![Source Code](https://img.shields.io/badge/github-source%20code-blue?logo=github&logoColor=white)](https://github.com/rolehippie/trident) [![Testing Build](https://github.com/rolehippie/trident/workflows/testing/badge.svg)](https://github.com/rolehippie/trident/actions?query=workflow%3Atesting) [![Readme Build](https://github.com/rolehippie/trident/workflows/readme/badge.svg)](https://github.com/rolehippie/trident/actions?query=workflow%3Areadme) [![Galaxy Build](https://github.com/rolehippie/trident/workflows/galaxy/badge.svg)](https://github.com/rolehippie/trident/actions?query=workflow%3Agalaxy) [![License: Apache-2.0](https://img.shields.io/github/license/rolehippie/trident)](https://github.com/rolehippie/trident/blob/master/LICENSE)
 
-Ansible role to install and configure Trident on Kubernetes. 
+Ansible role to install and configure Trident on Kubernetes.
 
-## Sponsor 
+## Sponsor
 
-[![Proact Deutschland GmbH](https://proact.eu/wp-content/uploads/2020/03/proact-logo.png)](https://proact.eu) 
+[![Proact Deutschland GmbH](https://proact.eu/wp-content/uploads/2020/03/proact-logo.png)](https://proact.eu)
 
 Building and improving this Ansible role have been sponsored by my employer **Proact Deutschland GmbH**.
 
 ## Table of content
 
-* [Default Variables](#default-variables)
-  * [trident_backends](#trident_backends)
-  * [trident_classes](#trident_classes)
-  * [trident_download](#trident_download)
-  * [trident_kubeconfig](#trident_kubeconfig)
-  * [trident_namespace](#trident_namespace)
-  * [trident_version](#trident_version)
-* [Dependencies](#dependencies)
-* [License](#license)
-* [Author](#author)
+- [Default Variables](#default-variables)
+  - [trident_backends](#trident_backends)
+  - [trident_classes](#trident_classes)
+  - [trident_download](#trident_download)
+  - [trident_kubeconfig](#trident_kubeconfig)
+  - [trident_namespace](#trident_namespace)
+  - [trident_version](#trident_version)
+- [Discovered Tags](#discovered-tags)
+- [Dependencies](#dependencies)
+- [License](#license)
+- [Author](#author)
 
 ---
 
@@ -110,12 +111,17 @@ Version of the Trident release to install
 #### Default value
 
 ```YAML
-trident_version: 21.07.2
+trident_version: 22.01.0
 ```
+
+## Discovered Tags
+
+**_trident_**
+
 
 ## Dependencies
 
-* None
+- None
 
 ## License
 
