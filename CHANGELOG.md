@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/rolehippie/trident/compare/v2.0.0...v2.0.1) (2023-03-27)
+
+
+### Bugfixes
+
+* **deps:** update dependency netapp/trident to v23.01.1 ([6581b40](https://github.com/rolehippie/trident/commit/6581b409ed95bdf62b578a4e9d1e0ce22917c363))
+
 ## [2.0.0](https://github.com/rolehippie/trident/compare/v1.0.0...v2.0.0) (2023-02-06)
 
 
