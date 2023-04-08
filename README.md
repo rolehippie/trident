@@ -5,7 +5,7 @@
 [![Readme Workflow](https://github.com/rolehippie/trident/actions/workflows/readme.yml/badge.svg)](https://github.com/rolehippie/trident/actions/workflows/readme.yml)
 [![Galaxy Workflow](https://github.com/rolehippie/trident/actions/workflows/galaxy.yml/badge.svg)](https://github.com/rolehippie/trident/actions/workflows/galaxy.yml)
 [![License: Apache-2.0](https://img.shields.io/github/license/rolehippie/trident)](https://github.com/rolehippie/trident/blob/master/LICENSE)
-[![Ansible Role](https://img.shields.io/ansible/role/55299)](https://galaxy.ansible.com/rolehippie/trident)
+[![Ansible Role](https://img.shields.io/badge/role-rolehippie.trident-blue)](https://galaxy.ansible.com/rolehippie/trident)
 
 Ansible role to install and configure Trident on Kubernetes.
 
