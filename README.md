@@ -120,7 +120,7 @@ Version of the Trident release to install
 #### Default value
 
 ```YAML
-trident_version: 23.01.1
+trident_version: 23.04.0
 ```
 
 ## Discovered Tags
